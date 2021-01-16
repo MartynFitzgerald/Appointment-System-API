@@ -15,7 +15,7 @@ var user = require('./controllers/user');
 /* Creating a index page for the application */
 router.get('/', function(req, res, next) {
   res.render('index', {
-    title: 'DirectMe - API'
+    title: 'Appointment System - API'
   });
 });
 
