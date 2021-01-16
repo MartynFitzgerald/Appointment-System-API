@@ -18,21 +18,21 @@ USE `appointment_system` ;
 
 CREATE TABLE IF NOT EXISTS `user` (
   `id` CHAR(38) NOT NULL,
-  `first_name` VARCHAR(256) NULL,
-  `last_name` VARCHAR(256) NULL,
-  `email_address` VARCHAR(256) NOT NULL UNIQUE,
-  `password` VARCHAR(256) NULL,
+  `email_address` VARCHAR(256) NOT NULL,
+  `first_name` VARCHAR(256) NOT NULL,
+  `last_name` VARCHAR(256) NOT NULL,
+  `password` VARCHAR(256) NOT NULL,
   `phone_number` VARCHAR(256) NULL,
-  ` last_updated_at` DATETIME NULL,
-  PRIMARY KEY (`id`)
-) ENGINE = InnoDB;
+  `last_updated_at` DATETIME NULL,
+  PRIMARY KEY (`id`, `email_address`))
+ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `branch` (
   `id` CHAR(38) NOT NULL,
-  `name` VARCHAR(256) NULL,
-  `address` VARCHAR(256) NULL,
   `latitude` FLOAT NOT NULL,
   `longitude` FLOAT NOT NULL,
+  `name` VARCHAR(256) NOT NULL,
+  `address` VARCHAR(256) NOT NULL,
   `last_updated_at` DATETIME NULL,
   PRIMARY KEY (`id`, `latitude`, `longitude`)
 ) ENGINE = InnoDB;
@@ -43,13 +43,10 @@ CREATE TABLE IF NOT EXISTS `staff` (
   `api_key` CHAR(38) NOT NULL,
   `api_usage` INT(11) NOT NULL,
   `permission_level` INT(11) NOT NULL,
+  `last_updated_at` DATETIME NULL,
   PRIMARY KEY (`user_id`, `branch_id`),
-  CONSTRAINT `fk_staff_user`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `user` (`id`),
-  CONSTRAINT `fk_staff_branch1`
-    FOREIGN KEY (`branch_id`)
-    REFERENCES `branch` (`id`)
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`)
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `appointments` (
@@ -60,15 +57,11 @@ CREATE TABLE IF NOT EXISTS `appointments` (
   `staff_user_id` CHAR(38) NOT NULL,
   `staff_branch_id` CHAR(38) NOT NULL,
   `user_id` CHAR(38) NULL,
-  PRIMARY KEY (`id`, `staff_user_id`, `staff_branch_id`, `end`, `start`),
-  CONSTRAINT `fk_appointments_staff1`
-    FOREIGN KEY (`staff_user_id` , `staff_branch_id`)
-    REFERENCES `staff` (`user_id` , `branch_id`),
-  CONSTRAINT `fk_appointments_user1`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `user` (`id`)
-)ENGINE = InnoDB;
-
+  PRIMARY KEY (`id`, `end`, `start`),
+  FOREIGN KEY (`staff_user_id`) REFERENCES `staff` (`user_id`),
+  FOREIGN KEY (`staff_branch_id`) REFERENCES `staff` (`branch_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE = InnoDB;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
