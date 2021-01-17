@@ -14,7 +14,7 @@ var check = require('../models/check');
 exports.get_all = async function(req, res, next) {
   check.key(req.params.key, function(accepted) {
     if (accepted) {
-      crud.call(`SELECT * FROM users`, req, res, next);
+      crud.call(`SELECT * FROM user`, req, res, next);
     } else {
       res.status(200).json({
         result: "An Error Has Occurred. Possibly, You Have Exceeded Amount Of Requests Or Invalid API Key"

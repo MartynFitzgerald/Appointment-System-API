@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `staff` (
   FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`)
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `appointments` (
+CREATE TABLE IF NOT EXISTS `appointment` (
   `id` CHAR(38) NOT NULL,
   `end` DATETIME NOT NULL,
   `start` DATETIME NOT NULL,
