@@ -21,14 +21,14 @@ router.get('/', function(req, res, next) {
 
 /* Scraping Location */
 /* GET All Scraping Locations from the db. */
-router.get('/API/:key/USER/', user.get_all);
+router.get('/API/USER/:key', user.get_all);
 /* GET Scrapings Location from the db. */
-router.get('/API/:key/USER/', user.get_by_id);
+router.get('/API/USER/:key', user.get_by_id);
 /* INSERT Scrapings Location into the db. */
-router.post('/API/:key/USER/', user.insert);
+router.post('/API/USER/:key', user.insert);
 /* UPDATE Scrapings Location in the db. */
-router.put('/API/:key/USER/', user.update_by_id);
+router.put('/API/USER/:key', user.update_by_id);
 /* DELETE Scrapings Location from the db. */
-router.delete('/API/:key/USER/', user.delete_by_id);
+router.delete('/API/USER/:key', user.delete_by_id);
 
 module.exports = router;

@@ -15,7 +15,8 @@ var mysql = require('mysql');
 
 exports.connection = mysql.createConnection({
   host     : 'localhost',
-  user     : 'sa',
-  password : '12345',
+  user     : 'root',
+  password : '',
+  port     : '3306',
   database : 'appointment_system'
-});
+}); 

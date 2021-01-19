@@ -14,28 +14,27 @@ var dbController = require('./dbconnection');
 */
 exports.key = async function(api_key, callback) {
   dbController.connection.query(`SELECT * FROM staff WHERE api_key="${api_key}"`, function(error, results, fields) {
-    if (error || !results) {
-      console.error(`SQL - SELECT * FROM staff WHERE api_key="${api_key}"`);
-      //Return false if error within sql.
-      callback(false);
-    } else if (results[0] != null || results[0] != undefined) {
-      if (results[0].api_usage == -1) {
-        //Return true since the limit is unlimited.
-        callback(true);
-      } else if (results[0].api_usage <= 2000) {
+    debugger;
+    if (error || !results) 
+    {
+      callback("An Error Has Occurred. The API Key Entered Wasn't Found In The Database.");
+    } 
+    else if (results[0] != null || results[0] != undefined) 
+    {
+      if (results[0].api_usage >= 0) 
+      {
         dbController.connection.query(`UPDATE staff SET api_usage=api_usage+1 WHERE api_key="${api_key}"`, function(error, results, fields) {
-          if (error || !results) {
-            console.error(`SQL - UPDATE staff SET api_usage=api_usage+1 WHERE api_key="${api_key}"`);
-            //Return false if error within sql.
-            callback(false);
+          if (error || !results) 
+          {
+            callback(`An Error Has Occurred. The API Usage Was Unable To Be Updated, API Key - "${api_key}"`);
           }
-          //Return true once updated api_usage.
-          callback(true);
         });
       }
-    } else {
-      //Return false if no API key found.
-      callback(false);
+    } 
+    else 
+    {
+      callback("An Error Has Occurred. The API Key Entered Wasn't Found In The Database.");
     }
   });
+  callback(false);
 };
