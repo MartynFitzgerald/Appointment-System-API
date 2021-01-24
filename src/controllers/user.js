@@ -27,13 +27,13 @@ exports.get_all = function(req, res, next) {
   callSQL(`SELECT * FROM user`, req, res, next);
 };
 exports.get_by_id = function(req, res, next) {
-  callSQL(`SELECT * FROM user WHERE id="${req.params.id}"`, req, res, next);
+  callSQL(`SELECT * FROM user WHERE id="${req.body.id}"`, req, res, next);
 };
 exports.insert = function(req, res, next) {
-  callSQL(`INSERT IGNORE INTO user (id, fName, lName, email_address, password, phone_number, last_updated_at) VALUES ("${req.body.id}", "${req.body.fName}", "${req.body.lName}", "${req.body.email_address}", "${req.body.password}", "${phone_number}", "${last_updated_at}");`, req, res, next);
+  callSQL(`INSERT IGNORE INTO user (id, first_name, last_name, email_address, password, phone_number, last_updated_at) VALUES ("${req.body.id}", "${req.body.first_name}", "${req.body.last_name}", "${req.body.email_address}", "${req.body.password}", "${req.body.phone_number}", "${req.body.last_updated_at}");`, req, res, next);
 };
 exports.update_by_id = function(req, res, next) {
-  callSQL(`UPDATE user SET fName="${req.body.fName}", lName="${req.body.lName}", email_address=${req.body.email_address}, password=${req.body.password}, phone_number=${req.body.phone_number}, last_updated_at=${req.body.last_updated_at} WHERE id="${req.body.id}";`, req, res, next);
+  callSQL(`UPDATE user SET first_name="${req.body.first_name}", last_name="${req.body.last_name}", email_address="${req.body.email_address}", password="${req.body.password}", phone_number="${req.body.phone_number}", last_updated_at="${req.body.last_updated_at}" WHERE id="${req.body.id}";`, req, res, next);
 };
 exports.delete_by_id = function(req, res, next) {
   callSQL(`DELETE FROM user WHERE id="${req.body.id}"`, req, res, next);

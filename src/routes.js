@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
 /* GET All Users from the db. */
 router.get('/API/USERS/:key', user.get_all);
 /* GET User from the db. */
-router.get('/API/USER/:key/:id', user.get_by_id);
+router.get('/API/USER/:key', user.get_by_id);
 /* INSERT User into the db. */
 router.post('/API/USER/:key', user.insert);
 /* UPDATE User in the db. */
