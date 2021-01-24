@@ -10,59 +10,31 @@
 var crud = require('../models/crud');
 var check = require('../models/check');
 
-/* User */
-exports.get_all = async function(req, res, next) {
+var callSQL = function(sql, req, res, next) {
   check.key(req.params.key, function(error) {
     if (error) {
       res.status(200).json({
         result: error
       });
     } else {
-      crud.call(`SELECT * FROM user`, req, res, next);
+      crud.call(sql, req, res, next);
     }
   });
+}
+
+/* User */
+exports.get_all = function(req, res, next) {
+  callSQL(`SELECT * FROM user`, req, res, next);
 };
 exports.get_by_id = function(req, res, next) {
-  check.key(req.params.key, function(accepted) {
-    if (accepted) {
-      crud.call(`SELECT * FROM user WHERE id="${req.body.id}"`, req, res, next);
-    } else {
-      res.status(200).json({
-        result: "An Error Has Occurred. Possibly, You Have Exceeded Amount Of Requests Or Invalid API Key"
-      });
-    }
-  });
+  callSQL(`SELECT * FROM user WHERE id="${req.params.id}"`, req, res, next);
 };
 exports.insert = function(req, res, next) {
-  check.key(req.params.key, function(accepted) {
-    if (accepted) {
-      crud.call(`INSERT IGNORE INTO user (id, fName, lName, email_address, password, phone_number, last_updated_at) VALUES ("${req.body.id}", "${req.body.fName}", "${req.body.lName}", "${req.body.email_address}", "${req.body.password}", "${phone_number}", "${last_updated_at}");`, req, res, next);
-    } else {
-      res.status(200).json({
-        result: "An Error Has Occurred. Possibly, You Have Exceeded Amount Of Requests Or Invalid API Key"
-      });
-    }
-  });
+  callSQL(`INSERT IGNORE INTO user (id, fName, lName, email_address, password, phone_number, last_updated_at) VALUES ("${req.body.id}", "${req.body.fName}", "${req.body.lName}", "${req.body.email_address}", "${req.body.password}", "${phone_number}", "${last_updated_at}");`, req, res, next);
 };
 exports.update_by_id = function(req, res, next) {
-  check.key(req.params.key, function(accepted) {
-    if (accepted) {
-      crud.call(`UPDATE user SET fName="${req.body.fName}", lName="${req.body.lName}", email_address=${req.body.email_address}, password=${req.body.password}, phone_number=${req.body.phone_number}, last_updated_at=${req.body.last_updated_at} WHERE id="${req.body.id}";`, req, res, next);
-    } else {
-      res.status(200).json({
-        result: "An Error Has Occurred. Possibly, You Have Exceeded Amount Of Requests Or Invalid API Key"
-      });
-    }
-  });
+  callSQL(`UPDATE user SET fName="${req.body.fName}", lName="${req.body.lName}", email_address=${req.body.email_address}, password=${req.body.password}, phone_number=${req.body.phone_number}, last_updated_at=${req.body.last_updated_at} WHERE id="${req.body.id}";`, req, res, next);
 };
 exports.delete_by_id = function(req, res, next) {
-  check.key(req.params.key, function(accepted) {
-    if (accepted) {
-      crud.call(`DELETE FROM user WHERE id="${req.body.id}"`, req, res, next);
-    } else {
-      res.status(200).json({
-        result: "An Error Has Occurred. Possibly, You Have Exceeded Amount Of Requests Or Invalid API Key"
-      });
-    }
-  });
+  callSQL(`DELETE FROM user WHERE id="${req.body.id}"`, req, res, next);
 };

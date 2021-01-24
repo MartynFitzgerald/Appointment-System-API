@@ -19,16 +19,15 @@ router.get('/', function(req, res, next) {
   });
 });
 
-/* Scraping Location */
-/* GET All Scraping Locations from the db. */
-router.get('/API/USER/:key', user.get_all);
-/* GET Scrapings Location from the db. */
-router.get('/API/USER/:key', user.get_by_id);
-/* INSERT Scrapings Location into the db. */
+/* GET All Users from the db. */
+router.get('/API/USERS/:key', user.get_all);
+/* GET User from the db. */
+router.get('/API/USER/:key/:id', user.get_by_id);
+/* INSERT User into the db. */
 router.post('/API/USER/:key', user.insert);
-/* UPDATE Scrapings Location in the db. */
+/* UPDATE User in the db. */
 router.put('/API/USER/:key', user.update_by_id);
-/* DELETE Scrapings Location from the db. */
+/* DELETE User from the db. */
 router.delete('/API/USER/:key', user.delete_by_id);
 
 module.exports = router;

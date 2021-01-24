@@ -14,27 +14,29 @@ var dbController = require('./dbconnection');
 */
 exports.key = async function(api_key, callback) {
   dbController.connection.query(`SELECT * FROM staff WHERE api_key="${api_key}"`, function(error, results, fields) {
-    debugger;
     if (error || !results) 
     {
       callback("An Error Has Occurred. The API Key Entered Wasn't Found In The Database.");
     } 
     else if (results[0] != null || results[0] != undefined) 
     {
-      if (results[0].api_usage >= 0) 
+      if (results[0].api_usage == -1) {
+        callback(false);
+      } 
+      else if (results[0].api_usage >= 0) 
       {
-        dbController.connection.query(`UPDATE staff SET api_usage=api_usage+1 WHERE api_key="${api_key}"`, function(error, results, fields) {
+        dbController.connection.query(`UPDATE staff SET api_usage=api_usage + 1 WHERE api_key="${api_key}"`, function(error, results, fields) {
           if (error || !results) 
           {
             callback(`An Error Has Occurred. The API Usage Was Unable To Be Updated, API Key - "${api_key}"`);
           }
         });
+        callback(false);
       }
-    } 
+    }
     else 
     {
       callback("An Error Has Occurred. The API Key Entered Wasn't Found In The Database.");
     }
   });
-  callback(false);
 };

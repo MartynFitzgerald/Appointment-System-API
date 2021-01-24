@@ -21,7 +21,7 @@ exports.call = function(sql, req, res, next) {
       res.status(200).json({
         result: results
       });
-    } else if (!results) {
+    } else {
       res.status(200).json({
         result: "404 - Error Encountered"
       });
