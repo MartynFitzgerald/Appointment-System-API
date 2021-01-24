@@ -13,7 +13,7 @@ var dbController = require('./dbconnection');
   are allowed to receive the result of their request.
 */
 exports.key = async function(api_key, callback) {
-  dbController.connection.query(`SELECT * FROM staff WHERE api_key="${api_key}"`, function(error, results, fields) {
+  dbController.connection.query(`SELECT * FROM staff WHERE api_key="${api_key}"`, (error, results, fields) => {
     if (error || !results) 
     {
       callback("An Error Has Occurred. The API Key Entered Wasn't Found In The Database.");
@@ -25,7 +25,7 @@ exports.key = async function(api_key, callback) {
       } 
       else if (results[0].api_usage >= 0) 
       {
-        dbController.connection.query(`UPDATE staff SET api_usage=api_usage + 1 WHERE api_key="${api_key}"`, function(error, results, fields) {
+        dbController.connection.query(`UPDATE staff SET api_usage=api_usage + 1 WHERE api_key="${api_key}"`, (error, results, fields) => {
           if (error || !results) 
           {
             callback(`An Error Has Occurred. The API Usage Was Unable To Be Updated, API Key - "${api_key}"`);

@@ -12,8 +12,8 @@ var dbController = require('./dbconnection');
   A function that requests certain types of data from database depending on the 
   sql string inputted declaring what table to gather the data from.
 */
-exports.call = function(sql, req, res, next) {
-  dbController.connection.query(sql, function(error, results, fields) {
+exports.call = (sql, req, res, next) => {
+  dbController.connection.query(sql, (error, results, fields) => {
     if (error) {
       console.error(`SQL - ${sql}`);
       throw error;
