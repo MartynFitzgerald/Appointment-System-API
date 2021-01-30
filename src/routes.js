@@ -13,6 +13,7 @@ var router = express.Router();
 var user = require('./controllers/user');
 var branch = require('./controllers/branch');
 var staff = require('./controllers/staff');
+var appointment = require('./controllers/appointment');
 
 /* Creating a index page for the application */
 router.get('/', function(req, res, next) {
@@ -53,5 +54,16 @@ router.post('/API/STAFF/:key', staff.insert);
 router.put('/API/STAFF/:key', staff.update_by_id);
 /* DELETE Staff from the db. */
 router.delete('/API/STAFF/:key', staff.delete_by_id);
+
+/* GET All Appointments from the db. */
+router.get('/API/APPOINTMENTS/:key', appointment.get_all);
+/* GET Appointment from the db. */
+router.get('/API/APPOINTMENT/:key', appointment.get_by_id);
+/* INSERT Appointment into the db. */
+router.post('/API/APPOINTMENT/:key', appointment.insert);
+/* UPDATE Appointment in the db. */
+router.put('/API/APPOINTMENT/:key', appointment.update_by_id);
+/* DELETE Appointment from the db. */
+router.delete('/API/APPOINTMENT/:key', appointment.delete_by_id);
 
 module.exports = router;
