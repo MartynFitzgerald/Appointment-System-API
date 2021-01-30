@@ -12,6 +12,7 @@ var router = express.Router();
 /* Importing functions from other files */
 var user = require('./controllers/user');
 var branch = require('./controllers/branch');
+var staff = require('./controllers/staff');
 
 /* Creating a index page for the application */
 router.get('/', function(req, res, next) {
@@ -41,5 +42,16 @@ router.post('/API/BRANCH/:key', branch.insert);
 router.put('/API/BRANCH/:key', branch.update_by_id);
 /* DELETE Branch from the db. */
 router.delete('/API/BRANCH/:key', branch.delete_by_id);
+
+/* GET All Staffs from the db. */
+router.get('/API/STAFFS/:key', staff.get_all);
+/* GET Staff from the db. */
+router.get('/API/STAFF/:key', staff.get_by_id);
+/* INSERT Staff into the db. */
+router.post('/API/STAFF/:key', staff.insert);
+/* UPDATE Staff in the db. */
+router.put('/API/STAFF/:key', staff.update_by_id);
+/* DELETE Staff from the db. */
+router.delete('/API/STAFF/:key', staff.delete_by_id);
 
 module.exports = router;

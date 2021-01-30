@@ -16,7 +16,7 @@ exports.key = async function(api_key, callback) {
   dbController.connection.query(`SELECT * FROM staff WHERE api_key="${api_key}"`, (error, results, fields) => {
     if (error || !results) 
     {
-      callback("An Error Has Occurred. The API Key Entered Wasn't Found In The Database.");
+      callback("An Unknown Error Has Occurred Regarding The API.");
     } 
     else if (results[0] != null || results[0] != undefined) 
     {
@@ -36,7 +36,7 @@ exports.key = async function(api_key, callback) {
     }
     else 
     {
-      callback("An Error Has Occurred. The API Key Entered Wasn't Found In The Database.");
+      callback("An Unknown Error Has Occurred Regarding The API or The Database Connection.");
     }
   });
 };

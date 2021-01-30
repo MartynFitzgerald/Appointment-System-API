@@ -24,10 +24,10 @@ var callSQL = (sql, req, res, next) => {
 
 /* User */
 exports.get_all = (req, res, next) => {
-  callSQL(`SELECT * FROM user`, req, res, next);
+  callSQL(`SELECT * FROM user LEFT JOIN staff ON user.id = staff.user_id WHERE staff.user_id IS NULL`, req, res, next);
 };
 exports.get_by_id = (req, res, next) => {
-  callSQL(`SELECT * FROM user WHERE id="${req.body.id}"`, req, res, next);
+  callSQL(`SELECT * FROM user LEFT JOIN staff ON user.id = staff.user_id WHERE staff.user_id IS NULL AND id="${req.body.id}"`, req, res, next);
 };
 exports.insert = (req, res, next) => {
   callSQL(`INSERT IGNORE INTO user VALUES ("${req.body.id}", "${req.body.first_name}", "${req.body.last_name}", "${req.body.email_address}", "${req.body.password}", "${req.body.phone_number}", "${req.body.last_updated_at}");`, req, res, next);
