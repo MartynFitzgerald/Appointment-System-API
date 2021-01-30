@@ -36,5 +36,5 @@ exports.update_by_id = (req, res, next) => {
   callSQL(`UPDATE staff SET api_key="${req.body.api_key}", api_usage="${req.body.api_usage}", permission_level="${req.body.permission_level}", last_updated_at="${req.body.last_updated_at}" WHERE user_id="${req.body.user_id}" AND branch_id="${req.body.branch_id}";`, req, res, next);
 };
 exports.delete_by_id = (req, res, next) => {
-  callSQL(`DELETE FROM staff WHERE user_id="${req.body.id}"`, req, res, next);
+  callSQL(`DELETE FROM staff WHERE user_id="${req.body.user_id}" AND branch_id="${req.body.branch_id}";`, req, res, next);
 };
