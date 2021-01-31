@@ -6,6 +6,7 @@
 |  Description:  These are the functions that are used to communicate with the
 |                data stored in the database.
 *===========================================================================*/
+var createError = require('http-errors');
 var dbController = require('./dbconnection');
 
 /* 
@@ -14,17 +15,32 @@ var dbController = require('./dbconnection');
 */
 exports.call = (sql, req, res, next) => {
   dbController.connection.query(sql, (error, results, fields) => {
+    let status = 200;
+
     if (error) {
-      console.error(`SQL - ${sql}`);
-      throw error;
+      status = 500;
     } else if (results) {
-      res.status(200).json({
+      if (results.length > 0 || results.affectedRows > 0) {
+        status = 200;
+      } else if (results.length <= 0) {
+        status = 404;
+      } else if (results.affectedRows <= 0) {
+        status = 406;
+      }
+    } else {
+      status = 400;
+    }
+    
+    if (status == 200) {
+      res.status(status).json({
+        status: status,
+        message: 'OK',
         result: results
       });
+    } else if (status == 500) {
+      next(createError(status, error));
     } else {
-      res.status(200).json({
-        result: "404 - Error Encountered"
-      });
+      next(createError(status));
     }
   });
 };
