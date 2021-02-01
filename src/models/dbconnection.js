@@ -13,10 +13,16 @@ var mysql = require('mysql');
   through to other JS functions to be utilized. 
 */
 
-exports.connection = mysql.createConnection({
+connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : '',
   port     : '3306',
   database : 'appointment_system'
 }); 
+
+exports.execute = (sql, callback) => {
+  connection.query(sql, (error, results) => {
+    return callback(error, results);
+  });
+};

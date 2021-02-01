@@ -7,21 +7,24 @@
 |                of the user's request which is then constructed and send to a
 |                CRUD functionality.
 *===========================================================================*/
-var crud = require('../models/crud');
-var check = require('../models/check');
+var connection = require('../models/dbConnection');
+var errorHandler = require('../models/errorHandler');
+var authentication = require('../models/authentication');
 
 var callSQL = (sql, req, res, next) => {
-  check.key(req.params.key, (error) => {
+  authentication.key(req.params.key, (error) => {
     if (error) {
       res.status(200).json({
+        status: 499,
         result: error
       });
     } else {
-      crud.call(sql, req, res, next);
+      connection.execute(sql, (error, results) => {
+        errorHandler.external(res, next, error, results);
+      });
     }
   });
 }
-
 /* Appointment */
 exports.get_all = (req, res, next) => {
   callSQL(`SELECT * FROM appointment`, req, res, next);
