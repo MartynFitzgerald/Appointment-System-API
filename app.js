@@ -9,10 +9,14 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
+const cors = require('cors');
 //Routes of all the different URLs that are possible within the API.
 var indexRouter = require('./src/routes');
 
 const app = express();
+//This will allow all the routes to be accessed anywhere on the web if that is what you need
+app.use(cors())
+
 //View engine setup.
 app.set('view engine', 'html');
 
