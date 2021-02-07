@@ -11,10 +11,10 @@ var authentication = require('../models/authentication');
 
 /* User */
 exports.get_all = (req, res, next) => {
-  authentication.key(`SELECT * FROM user LEFT JOIN staff ON user.id = staff.user_id WHERE staff.user_id IS NULL`, req, res, next);
+  authentication.key(`SELECT user.* FROM user LEFT JOIN staff ON user.id = staff.user_id WHERE staff.user_id IS NULL`, req, res, next);
 };
 exports.get_by_id = (req, res, next) => {
-  authentication.key(`SELECT * FROM user LEFT JOIN staff ON user.id = staff.user_id WHERE staff.user_id IS NULL AND id="${req.body.id}"`, req, res, next);
+  authentication.key(`SELECT user.* FROM user LEFT JOIN staff ON user.id = staff.user_id WHERE staff.user_id IS NULL AND id="${req.body.id}"`, req, res, next);
 };
 exports.insert = (req, res, next) => {
   authentication.key(`INSERT IGNORE INTO user VALUES ("${req.body.id}", "${req.body.first_name}", "${req.body.last_name}", "${req.body.email_address}", "${req.body.password}", "${req.body.phone_number}", "${req.body.last_updated_at}");`, req, res, next);
