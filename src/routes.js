@@ -13,7 +13,7 @@ var router = express.Router();
 /* Importing functions from other files */
 var user = require('./controllers/user');
 var branch = require('./controllers/branch');
-var staff = require('./controllers/staff');
+var staffMember = require('./controllers/staffMember');
 var appointment = require('./controllers/appointment');
 
 /* GET All Users from the db. */
@@ -38,16 +38,16 @@ router.put('/BRANCH/:key', branch.update_by_id);
 /* DELETE Branch from the db. */
 router.delete('/BRANCH/:key', branch.delete_by_id);
 
-/* GET All Staffs from the db. */
-router.get('/STAFFS/:key', staff.get_all);
+/* GET All Staff Members from the db. */
+router.get('/STAFFMEMBERS/:key', staffMember.get_all);
 /* GET Staff from the db. */
-router.get('/STAFF/:key', staff.get_by_id);
+router.get('/STAFFMEMBER/:key', staffMember.get_by_id);
 /* INSERT Staff into the db. */
-router.post('/STAFF/:key', staff.insert);
+router.post('/STAFFMEMBER/:key', staffMember.insert);
 /* UPDATE Staff in the db. */
-router.put('/STAFF/:key', staff.update_by_id);
+router.put('/STAFFMEMBER/:key', staffMember.update_by_id);
 /* DELETE Staff from the db. */
-router.delete('/STAFF/:key', staff.delete_by_id);
+router.delete('/STAFFMEMBER/:key', staffMember.delete_by_id);
 
 /* GET All Appointments from the db. */
 router.get('/APPOINTMENTS/:key', appointment.get_all);
