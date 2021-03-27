@@ -11,7 +11,10 @@ var authentication = require('../models/authentication');
 
 /* Appointment */
 exports.get_all = (req, res, next) => {
-  authentication.key(`SELECT * FROM appointment`, req, res, next);
+  authentication.key(`SELECT * FROM appointment
+                      INNER JOIN staff ON staff.user_id = appointment.staff_user_id
+                      INNER JOIN user ON user.id = appointment.user_id
+                      INNER JOIN branch ON branch.id = appointment.staff_branch_id`, req, res, next);
 };
 exports.get_by_id = (req, res, next) => {
   authentication.key(`SELECT * FROM appointment WHERE id="${req.body.id}"`, req, res, next);
